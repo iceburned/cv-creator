@@ -16,6 +16,7 @@ class CvController extends Controller
 
     public function store(Request $request)
     {
+
         $user = User::firstOrCreate([
             'name' => $request->name,
             'middle_name' => $request->middle_name,

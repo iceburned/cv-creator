@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class UniversityController extends Controller
 {
-    public function store(CreateUniversityRequest $request)
+    public function index()
     {
-        $validated = $request->validated();
-        $uni = University::firstOrCreate(['name' => $validated['name']]);
+        return University::all();
+    }
+
+    public function store(Request $request)
+    {
+//        $validated = $request->validated();
+        $uni = University::firstOrCreate(['name' => $request->university_name]);
+
+
     }
 }

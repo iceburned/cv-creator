@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CvController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $universities = \App\Models\University::all();
-//    return view('cv-view', [ 'universities' => $universities]);
-    return view('cvs-list-view');
+    $skills = \App\Models\Skill::all();
+    return view('cv-view', [ 'universities' => $universities, 'skills' => $skills]);
+//    return view('cvs-list-view');
 });
 
 
@@ -27,6 +29,9 @@ Route::get('/', function () {
 Route::get('/retrieve-cvs', [CvController::class, 'index']);
 Route::post('/cvs', [CvController::class, 'store'])->name('store.cv');
 
-Route::get('/skills', [SkillController::class, 'index']);
-Route::post('/skills', [SkillController::class, 'store']);
+Route::get('/skills', [SkillController::class, 'index'])->name('get.skills');
+Route::post('/skills', [SkillController::class, 'store'])->name('store.skill');
+
+Route::get('/universities', [UniversityController::class, 'index'])->name('get.universities');
+Route::post('/universities', [UniversityController::class, 'store'])->name('university.store');
 
