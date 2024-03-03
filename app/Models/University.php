@@ -17,4 +17,10 @@ class University extends Model
     {
 
     }
+
+    public  function users()
+    {
+        return $this->belongsToMany(User::class, 'universities_users', 'user_id', 'university_id')
+            ->withPivot('scores');
+    }
 }

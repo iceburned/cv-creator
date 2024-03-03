@@ -50,4 +50,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cv::class);
     }
+
+    public function universities()
+    {
+        return $this->belongsToMany(University::class, 'universities_users', 'university_id', 'user_id')
+            ->withPivot('scores');
+    }
 }

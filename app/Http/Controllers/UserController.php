@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        dd($request->all());
         $validated =  $request->validated();
         $user = User::firstOrCreate([
             'name' => $validated['name'],
@@ -18,5 +17,7 @@ class UserController extends Controller
             'last_name' => $validated['last_name'],
             'birth_date' => $validated['birth_date'],
         ]);
+
+        return $user;
     }
 }

@@ -35,7 +35,7 @@
         {{--            console.error(xhr.responseText);--}}
         {{--        }--}}
         {{--    });--}}
-        {{--}--}}
+        // }
 
         $(document).ready(function () {
             $('#addSkill').click(function () {
@@ -69,13 +69,21 @@
                             $.ajax({
                                 url: "{{ route('get.skills') }}",
                                 type: "GET",
-                                success: function (skills) {
-                                    $('#skill').empty();
-                                    $.each(skills, function (index, skill) {
-                                        $('#skill').append('<option value="' + skill.id + '">' + skill.name + '</option>');
+                                success: function(skills) {
+                                    var skillSelect = $('#skills');
+                                    skillSelect.empty(); // Clear existing options
+                                    $.each(skills, function(index, skill) {
+                                        skillSelect.append('<option value="' + skill.id + '">' + skill.name + '</option>');
+                                    });
+                                    // Initialize multiselect dropdown
+                                    skillSelect.multiselect({
+                                        nonSelectedText: 'Select Skills',
+                                        enableFiltering: true,
+                                        enableCaseInsensitiveFiltering: true,
+                                        buttonWidth: '100%'
                                     });
                                 },
-                                error: function (xhr, status, error) {
+                                error: function(xhr, status, error) {
                                     console.error(xhr.responseText);
                                 }
                             });
@@ -107,6 +115,10 @@
                     // Get data from input fields
                     var universityName = $('#newUniversityName').val();
                     var universityScore = $('#newUniversityScore').val();
+                    var name = $('#name').val();
+                    var middle_name = $('#middle_name').val();
+                    var last_name = $('#last_name').val();
+                    var datepicker = $('#datepicker').val();
 
                     // AJAX request
                     $.ajax({
@@ -115,6 +127,10 @@
                         data: {
                             university_name: universityName,
                             university_score: universityScore,
+                            user_name: name,
+                            middle_name: middle_name,
+                            last_name: last_name,
+                            datepicker: datepicker,
                             _token: "{{ csrf_token() }}"
                         },
                         success: function (response) {
