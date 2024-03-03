@@ -13,11 +13,10 @@ class SkillController extends Controller
         return Skill::all();
     }
 
-    public function create(CreateSkillRequest $request)
+    public function store(CreateSkillRequest $request)
     {
         $validated = $request->validated();
-
-        $skill = Skill::firstOrCreate(['name' => $validated['name']]);
+        $skill = Skill::firstOrCreate(['name' => $validated['skill_name']]);
 
         return $skill;
     }

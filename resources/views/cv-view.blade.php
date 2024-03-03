@@ -7,8 +7,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script>
 
-        $( function() {
-            $( "#datepicker" ).datepicker();
+        $(function () {
+            $("#datepicker").datepicker();
             // fetchSkills(); // Fetch skills when the page loads
         });
 
@@ -37,95 +37,115 @@
         {{--    });--}}
         {{--}--}}
 
-        $(document).ready(function(){
-            $('#addSkill').click(function(){
+        $(document).ready(function () {
+            $('#addSkill').click(function () {
                 $('#skillPopup').show();
             });
 
-            $('#cancelSkill').click(function(){
+            $('#cancelSkill').click(function () {
                 $('#skillPopup').hide();
             });
 
-            $('#submitSkill').click(function() {
-                var newSkill = $('#newSkill').val();
+            $('#submitSkill').click(function () {
+                if ($('#skillPopup').is(':visible')) {
+                    var newSkill = $('#newSkill').val();
 
-                // AJAX request to add a new skill
-                $.ajax({
-                    url: "{{ route('store.skill') }}",
-                    type: "POST",
-                    data: {
-                        skill_name: newSkill,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function (response) {
-                        // If the skill was added successfully, fetch skills again to update the dropdown
-                        // fetchSkills();
-                        $('#skillPopup').hide();
-                        $('#newSkill').val('');
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
+                    // AJAX request to add a new skill
+                    $.ajax({
+                        url: "{{ route('store.skill') }}",
+                        type: "POST",
+                        data: {
+                            skill_name: newSkill,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function (response) {
+
+                            console.log(response);
+                            // If the skill was added successfully, fetch skills again to update the dropdown
+                            // fetchSkills();
+                            $('#skillPopup').hide();
+                            $('#newSkill').val('');
+
+                            $.ajax({
+                                url: "{{ route('get.skills') }}",
+                                type: "GET",
+                                success: function (skills) {
+                                    $('#skill').empty();
+                                    $.each(skills, function (index, skill) {
+                                        $('#skill').append('<option value="' + skill.id + '">' + skill.name + '</option>');
+                                    });
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(xhr.responseText);
+                                }
+                            });
+
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
             });
         });
 
-        $( function() {
-            $( "#datepicker" ).datepicker();
+        $(function () {
+            $("#datepicker").datepicker();
         });
 
-        $(document).ready(function(){
-            $('#addUniversity').click(function(){
+        $(document).ready(function () {
+            $('#addUniversity').click(function () {
                 $('#universityPopup').show();
             });
 
-            $('#cancelUniversity').click(function(){
+            $('#cancelUniversity').click(function () {
                 $('#universityPopup').hide();
             });
 
-            $('#submitUniversity').click(function() {
-                // Get data from input fields
-                var universityName = $('#newUniversityName').val();
-                var universityScore = $('#newUniversityScore').val();
+            $('#submitUniversity').click(function () {
+                if ($('#universityPopup').is(':visible')) {
+                    // Get data from input fields
+                    var universityName = $('#newUniversityName').val();
+                    var universityScore = $('#newUniversityScore').val();
 
-                // AJAX request
-                $.ajax({
-                    url: "{{ route('university.store') }}",
-                    type: "POST",
-                    data: {
-                        university_name: universityName,
-                        university_score: universityScore,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function (response) {
+                    // AJAX request
+                    $.ajax({
+                        url: "{{ route('university.store') }}",
+                        type: "POST",
+                        data: {
+                            university_name: universityName,
+                            university_score: universityScore,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function (response) {
 
-                        console.log(response);
+                            console.log(response);
 
-                        $('#universityPopup').hide();
-                        $('#newUniversityName').val('');
-                        $('#newUniversityScore').val('');
+                            $('#universityPopup').hide();
+                            $('#newUniversityName').val('');
+                            $('#newUniversityScore').val('');
 
 
-                        $.ajax({
-                            url: "{{ route('get.universities') }}",
-                            type: "GET",
-                            success: function(universities) {
-                                $('#university').empty();
-                                $.each(universities, function(index, university) {
-                                    $('#university').append('<option value="' + university.id + '">' + university.name + '</option>');
-                                });
-                            },
-                            error: function(xhr, status, error) {
-                                console.error(xhr.responseText);
-                            }
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-
-        });
+                            $.ajax({
+                                url: "{{ route('get.universities') }}",
+                                type: "GET",
+                                success: function (universities) {
+                                    $('#university').empty();
+                                    $.each(universities, function (index, university) {
+                                        $('#university').append('<option value="' + university.id + '">' + university.name + '</option>');
+                                    });
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
+            });
         });
     </script>
     <style>
@@ -160,28 +180,29 @@
 <form id="cvForm" action="{{ route('store.cv') }}" method="POST">
     @csrf
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
+    <input type="text" id="name" name="name"><br><br>
     <label for="middle_name">Middle name:</label>
-    <input type="text" id="middle_name" name="middle_name" required><br><br>
+    <input type="text" id="middle_name" name="middle_name"><br><br>
     <label for="last_name">Last name:</label>
-    <input type="text" id="last_name" name="last_name" required><br><br>
+    <input type="text" id="last_name" name="last_name"><br><br>
     <label for="birth_date">Date of Birth:</label>
-    <input type="text" id="datepicker" name="birth_date" required><br><br>
+    <input type="text" id="datepicker" name="birth_date"><br><br>
     <label for="university">University:</label>
-    <select id="university" name="university" required>
+    <select id="university" name="university">
         <option value="">Select University</option>
         @foreach($universities as $university)
             <option value="{{ $university->id }}">{{ $university->name }}</option>
         @endforeach
     </select>
-    <button type="button" id="addUniversity">Add University</button><br><br>
+    <button type="button" id="addUniversity">Add University</button>
+    <br><br>
 
     <!-- University Popup -->
     <div id="universityPopup">
         <label for="newUniversityName">University Name:</label>
-        <input type="text" id="newUniversityName" name="newUniversityName" required><br><br>
+        <input type="text" id="newUniversityName" name="newUniversityName"><br><br>
         <label for="newUniversityScore">University Score:</label>
-        <input type="text" id="newUniversityScore" name="newUniversityScore" required><br><br>
+        <input type="text" id="newUniversityScore" name="newUniversityScore"><br><br>
         <button type="button" id="cancelUniversity">Cancel</button>
         <button type="button" id="submitUniversity">Submit</button>
     </div>
@@ -189,23 +210,23 @@
 
     <!-- Other form fields -->
     <label for="skills">Skills:</label>
-    <select id="skills" name="skills[]" multiple required>
-        <option value="">Select University</option>
+    <select id="skills" name="skills[]" multiple>
+        <option value="">Select skill</option>
         @foreach($skills as $skill)
-            <option value="{{ $university->id }}">{{ $university->name }}</option>
+            <option value="{{ $skill->id }}">{{ $skill->name }}</option>
         @endforeach
     </select>
-    <button type="button" id="addSkill">Add Skill</button><br><br>
+        <button type="button" id="addSkill">Add Skill</button><br><br>
 
     <!-- Skill Popup -->
     <div id="skillPopup">
         <label for="newSkill">New Skill:</label>
-        <input type="text" id="newSkill" name="newSkill" required><br><br>
+        <input type="text" id="newSkill" name="newSkill"><br><br>
         <button type="button" id="cancelSkill">Cancel</button>
         <button type="button" id="submitSkill">Submit</button>
     </div>
-    <!-- End Skill Popup -->
 
+    <!-- End Skill Popup -->
 
 
     <button type="submit">Submit CV</button>
