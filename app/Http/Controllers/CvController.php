@@ -9,7 +9,6 @@ use App\Models\Skill;
 use App\Models\University;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class CvController extends Controller
 {

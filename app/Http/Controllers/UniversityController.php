@@ -18,19 +18,11 @@ class UniversityController extends Controller
     {
         $validated = $request->validated();
 
-//        $user = User::firstOrCreate([
-//            'name' => $validated['user_name'],
-//            'middle_name' => $validated['middle_name'],
-//            'last_name' =>$validated['last_name'],
-//            'birth_date' => $validated['datepicker'],
-//        ]);
-
         $uni = University::firstOrCreate([
             'name' => $validated['university_name'],
             'accreditation' => $validated['accreditation'],
-//            'user_id' => $user->id,
         ]);
 
-        return $uni;
+        return response()->noContent(201);
     }
 }

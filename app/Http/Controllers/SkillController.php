@@ -18,6 +18,6 @@ class SkillController extends Controller
         $validated = $request->validated();
         $skill = Skill::firstOrCreate(['name' => $validated['skill_name']]);
 
-        return $skill;
+        return response()->noContent(201);
     }
 }

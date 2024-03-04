@@ -21,13 +21,13 @@
             $.ajax({
                 url: "{{ route('get.skills') }}",
                 type: "GET",
+
                 success: function (skills) {
                     var skillSelect = $('#skills');
                     skillSelect.empty();
                     $.each(skills, function (index, skill) {
                         skillSelect.append('<option value="' + skill.id + '">' + skill.name + '</option>');
                     });
-
                     // skillSelect.multiselect({
                     //     nonSelectedText: 'Select Skills',
                     //     enableFiltering: true,
@@ -37,7 +37,6 @@
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
-
                     var errorMessage = xhr.responseText;
                     $('#errorDialog').text(errorMessage);
                     $('#errorDialog').dialog({
@@ -51,7 +50,6 @@
                     });
                 }
             });
-
         }
 
         $(document).ready(function () {
@@ -68,12 +66,9 @@
             $('#submitSkill').click(function (event) {
                 if ($('#skillPopup').is(':visible')) {
                     event.preventDefault();
-
-                    // Manually trigger form validation
                     var form = $('#newSkillForm')[0];
-                    console.log(form)
-                    if (form.checkValidity()) {
 
+                    if (form.checkValidity()) {
                         var newSkill = $('#newSkill').val();
 
                         $.ajax({
@@ -90,7 +85,6 @@
                             },
                             error: function (xhr, status, error) {
                                 console.error(xhr.responseText);
-
                                 var errorMessage = xhr.responseText;
                                 $('#errorDialog').text(errorMessage);
                                 $('#errorDialog').dialog({
@@ -106,7 +100,6 @@
                         });
                     }
                     else {
-                        // If form is invalid, handle accordingly (e.g., display error messages)
                         console.log('fail')
                         form.reportValidity();
                     }
@@ -122,6 +115,7 @@
             $.ajax({
                 url: "{{ route('get.universities') }}",
                 type: "GET",
+
                 success: function (universities) {
                     $('#university').empty();
                     $.each(universities, function (index, university) {
@@ -130,7 +124,6 @@
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
-
                     var errorMessage = xhr.responseText;
                     $('#errorDialog').text(errorMessage);
                     $('#errorDialog').dialog({
@@ -160,19 +153,16 @@
             $('#submitUniversity').click(function (event) {
                 if ($('#universityPopup').is(':visible')) {
                     event.preventDefault();
-
-                    // Manually trigger form validation
                     var form = $('#newUniversityForm')[0];
                     console.log(form)
-                    if (form.checkValidity()) {
 
+                    if (form.checkValidity()) {
                         var universityName = $('#newUniversityName').val();
                         var accreditation = $('#newAccreditation').val();
                         var name = $('#name').val();
                         var middle_name = $('#middle_name').val();
                         var last_name = $('#last_name').val();
                         var datepicker = $('#datepicker').val();
-
 
                         $.ajax({
                             url: "{{ route('university.store') }}",
@@ -186,20 +176,16 @@
                                 datepicker: datepicker,
                                 _token: "{{ csrf_token() }}"
                             },
+
                             success: function (response) {
-
-                                console.log(response);
-
                                 $('#universityPopup').hide();
                                 $('#newUniversityName').val('');
                                 $('#newAccreditation').val('');
                                 getUniversities();
                                 removeRequiredAttribute();
-
                             },
                             error: function (xhr, status, error) {
                                 console.error(xhr.responseText);
-
                                 var errorMessage = xhr.responseText;
                                 $('#errorDialog').text(errorMessage);
                                 $('#errorDialog').dialog({
@@ -213,28 +199,19 @@
                                 });
                             }
                         });
-
-                        // If form is valid, continue with your logic
-
-                        // form.submit();
                     } else {
-                        // If form is invalid, handle accordingly (e.g., display error messages)
                         console.log('fail')
                         form.reportValidity();
                     }
-
-
                 }
             });
         });
 
         function addRequiredUniversity() {
-
             var universityNameInput = $('#newUniversityName');
             if (universityNameInput.length > 0) {
                 universityNameInput.attr('required', 'required');
             }
-
             var accreditationInput = $('#newAccreditation');
             if (accreditationInput.length > 0) {
                 accreditationInput.attr('required', 'required');
@@ -242,19 +219,15 @@
         }
 
         function addRequiredSkills() {
-
             var newSkillInput = $('#newSkill');
             if (newSkillInput.length > 0) {
                 newSkillInput.attr('required', 'required');
             }
         }
 
-        // Function to remove the required attribute from the specified input fields
         function removeRequiredAttribute() {
             $('#newUniversityName, #newAccreditation, #newSkill').removeAttr('required');
         }
-
-        // Event listener for cancel button
         $('#cancelUniversity, #cancelSkill').click(function () {
             removeRequiredAttribute();
         });
@@ -348,7 +321,7 @@
 </div>
 
 <p>Note: Fields marked with * are required.</p>
-<p>Note: To add new university fields for name must be filled.</p>
+
 <br><br><br>
 <a href="{{ route('home') }}">To get cvs for given period click here!</a>
 

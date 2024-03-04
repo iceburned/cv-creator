@@ -3,14 +3,21 @@
 <head>
     <title>Retrieve CVs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+
+    <style>
+        .required::after {
+            content: '*';
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
 <h2>Retrieve CVs</h2>
 <form id="retrieveForm">
-    <label for="fromDate">From:</label>
+    <label for="fromDate" class="required">From:</label>
     <input type="text" id="fromDate" name="fromDate" class="datepicker" required>
-    <label for="toDate">To:</label>
+    <label for="toDate" class="required">To:</label>
     <input type="text" id="toDate" name="toDate" class="datepicker" required>
 
     <br><br>
@@ -35,8 +42,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 <script>
-
-
 
     $(document).ready(function () {
         $(".datepicker").datepicker();
@@ -78,8 +83,10 @@
     });
 </script>
 
-
 <br><br><br>
 <a href="{{ route('create.cvs') }}">To create new CV click here!</a>
+
+<br><br>
+<p>Note: Fields marked with * are required.</p>
 </body>
 </html>

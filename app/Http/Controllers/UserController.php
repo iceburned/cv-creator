@@ -18,6 +18,6 @@ class UserController extends Controller
             'birth_date' => $validated['birth_date'],
         ]);
 
-        return $user;
+        return response()->noContent(201);
     }
 }
