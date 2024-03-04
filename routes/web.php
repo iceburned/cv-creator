@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/cvs', [CvController::class, 'indexView'])->name('create.cvs');
 Route::get('/', [CvController::class, 'index'])->name('home');
-Route::get('/retrieve-cvs', [CvController::class, 'getCvPerDate']);
+Route::get('/retrieve-cvs', [CvController::class, 'getCvPerDate'])->name('get.cv.per.date');
 Route::post('/cvs', [CvController::class, 'store'])->name('store.cv');
 
 Route::get('/skills', [SkillController::class, 'index'])->name('get.skills');

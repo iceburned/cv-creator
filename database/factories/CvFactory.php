@@ -17,7 +17,8 @@ class CvFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => 1,
+            'university_id' => 1,
         ];
     }
 }
