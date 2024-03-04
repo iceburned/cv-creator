@@ -17,16 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $universities = \App\Models\University::all();
-    $skills = \App\Models\Skill::all();
-    return view('cv-view', [ 'universities' => $universities, 'skills' => $skills]);
-//    return view('cvs-list-view');
-});
+Route::get('/cvs', [CvController::class, 'indexView'])->name('home');
+
 
 
 //Route::post('users', [UserController::class, 'store'])->name('create.user');
-Route::get('/retrieve-cvs', [CvController::class, 'index']);
+Route::get('/', [CvController::class, 'index']);
+Route::get('/retrieve-cvs', [CvController::class, 'getCvPerDate']);
 Route::post('/cvs', [CvController::class, 'store'])->name('store.cv');
 
 Route::get('/skills', [SkillController::class, 'index'])->name('get.skills');
@@ -34,4 +31,3 @@ Route::post('/skills', [SkillController::class, 'store'])->name('store.skill');
 
 Route::get('/universities', [UniversityController::class, 'index'])->name('get.universities');
 Route::post('/universities', [UniversityController::class, 'store'])->name('university.store');
-

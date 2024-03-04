@@ -53,7 +53,6 @@ class User extends Authenticatable
 
     public function universities()
     {
-        return $this->belongsToMany(University::class, 'universities_users', 'university_id', 'user_id')
-            ->withPivot('scores');
+        return $this->hasMany(University::class);
     }
 }

@@ -16,8 +16,6 @@ class UniversityController extends Controller
 
     public function store(Request $request)
     {
-//        $validated = $request->validated();
-
         $user = User::firstOrCreate([
             'name' => $request->user_name,
             'middle_name' => $request->middle_name,
@@ -25,8 +23,12 @@ class UniversityController extends Controller
             'birth_date' => $request->datepicker,
         ]);
 
-        $uni = University::firstOrCreate(['name' => $request->university_name]);
-        $uni->users()->attach($user, ['scores' => $request->university_score]);
+        $uni = University::firstOrCreate([
+            'name' => $request->university_name,
+            'accreditation' => $request->accreditation,
+            'user_id' => $user->id,
+        ]);
+
         return $uni;
     }
 }

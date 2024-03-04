@@ -9,33 +9,7 @@
 
         $(function () {
             $("#datepicker").datepicker();
-            // fetchSkills(); // Fetch skills when the page loads
         });
-
-        // Function to fetch skills from the server
-        {{--function fetchSkills() {--}}
-        {{--    $.ajax({--}}
-        {{--        url: "{{ route('get.skills') }}",--}}
-        {{--        type: "GET",--}}
-        {{--        success: function(skills) {--}}
-        {{--            var skillSelect = $('#skills');--}}
-        {{--            skillSelect.empty(); // Clear existing options--}}
-        {{--            $.each(skills, function(index, skill) {--}}
-        {{--                skillSelect.append('<option value="' + skill.id + '">' + skill.name + '</option>');--}}
-        {{--            });--}}
-        {{--            // Initialize multiselect dropdown--}}
-        {{--            skillSelect.multiselect({--}}
-        {{--                nonSelectedText: 'Select Skills',--}}
-        {{--                enableFiltering: true,--}}
-        {{--                enableCaseInsensitiveFiltering: true,--}}
-        {{--                buttonWidth: '100%'--}}
-        {{--            });--}}
-        {{--        },--}}
-        {{--        error: function(xhr, status, error) {--}}
-        {{--            console.error(xhr.responseText);--}}
-        {{--        }--}}
-        {{--    });--}}
-        // }
 
         $(document).ready(function () {
             $('#addSkill').click(function () {
@@ -50,7 +24,6 @@
                 if ($('#skillPopup').is(':visible')) {
                     var newSkill = $('#newSkill').val();
 
-                    // AJAX request to add a new skill
                     $.ajax({
                         url: "{{ route('store.skill') }}",
                         type: "POST",
@@ -61,21 +34,19 @@
                         success: function (response) {
 
                             console.log(response);
-                            // If the skill was added successfully, fetch skills again to update the dropdown
-                            // fetchSkills();
                             $('#skillPopup').hide();
                             $('#newSkill').val('');
 
                             $.ajax({
                                 url: "{{ route('get.skills') }}",
                                 type: "GET",
-                                success: function(skills) {
+                                success: function (skills) {
                                     var skillSelect = $('#skills');
-                                    skillSelect.empty(); // Clear existing options
-                                    $.each(skills, function(index, skill) {
+                                    skillSelect.empty();
+                                    $.each(skills, function (index, skill) {
                                         skillSelect.append('<option value="' + skill.id + '">' + skill.name + '</option>');
                                     });
-                                    // Initialize multiselect dropdown
+
                                     skillSelect.multiselect({
                                         nonSelectedText: 'Select Skills',
                                         enableFiltering: true,
@@ -83,7 +54,7 @@
                                         buttonWidth: '100%'
                                     });
                                 },
-                                error: function(xhr, status, error) {
+                                error: function (xhr, status, error) {
                                     console.error(xhr.responseText);
                                 }
                             });
@@ -112,21 +83,19 @@
 
             $('#submitUniversity').click(function () {
                 if ($('#universityPopup').is(':visible')) {
-                    // Get data from input fields
                     var universityName = $('#newUniversityName').val();
-                    var universityScore = $('#newUniversityScore').val();
+                    var accreditation = $('#newAccreditation').val();
                     var name = $('#name').val();
                     var middle_name = $('#middle_name').val();
                     var last_name = $('#last_name').val();
                     var datepicker = $('#datepicker').val();
 
-                    // AJAX request
                     $.ajax({
                         url: "{{ route('university.store') }}",
                         type: "POST",
                         data: {
                             university_name: universityName,
-                            university_score: universityScore,
+                            accreditation: accreditation,
                             user_name: name,
                             middle_name: middle_name,
                             last_name: last_name,
@@ -139,7 +108,7 @@
 
                             $('#universityPopup').hide();
                             $('#newUniversityName').val('');
-                            $('#newUniversityScore').val('');
+                            $('#newAccreditation').val('');
 
 
                             $.ajax({
@@ -213,18 +182,15 @@
     <button type="button" id="addUniversity">Add University</button>
     <br><br>
 
-    <!-- University Popup -->
     <div id="universityPopup">
         <label for="newUniversityName">University Name:</label>
         <input type="text" id="newUniversityName" name="newUniversityName"><br><br>
-        <label for="newUniversityScore">University Score:</label>
-        <input type="text" id="newUniversityScore" name="newUniversityScore"><br><br>
+        <label for="newAccreditation">University Accreditation:</label>
+        <input type="text" id="newAccreditation" name="newAccreditation"><br><br>
         <button type="button" id="cancelUniversity">Cancel</button>
         <button type="button" id="submitUniversity">Submit</button>
     </div>
-    <!-- End University Popup -->
 
-    <!-- Other form fields -->
     <label for="skills">Skills:</label>
     <select id="skills" name="skills[]" multiple>
         <option value="">Select skill</option>
@@ -232,18 +198,15 @@
             <option value="{{ $skill->id }}">{{ $skill->name }}</option>
         @endforeach
     </select>
-        <button type="button" id="addSkill">Add Skill</button><br><br>
+    <button type="button" id="addSkill">Add Skill</button>
+    <br><br>
 
-    <!-- Skill Popup -->
     <div id="skillPopup">
         <label for="newSkill">New Skill:</label>
         <input type="text" id="newSkill" name="newSkill"><br><br>
         <button type="button" id="cancelSkill">Cancel</button>
         <button type="button" id="submitSkill">Submit</button>
     </div>
-
-    <!-- End Skill Popup -->
-
 
     <button type="submit">Submit CV</button>
 </form>

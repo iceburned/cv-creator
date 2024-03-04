@@ -12,7 +12,7 @@ class Cv extends Model
     protected $fillable = [
         'user_id',
         'university_id',
-        'score',
+        'accreditation',
     ];
 
     public function user()
@@ -23,5 +23,10 @@ class Cv extends Model
     public function skills()
     {
         return $this->belongsToMany(Skill::class, 'cv_skills', 'cv_id', 'skill_id');
+    }
+
+    public function university()
+    {
+        return $this->belongsTo(University::class);
     }
 }

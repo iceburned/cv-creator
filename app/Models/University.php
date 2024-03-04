@@ -11,16 +11,12 @@ class University extends Model
 
     protected $fillable = [
         'name',
+        'accreditation',
+        'user_id',
     ];
 
-    public function cv()
+    public function user()
     {
-
-    }
-
-    public  function users()
-    {
-        return $this->belongsToMany(User::class, 'universities_users', 'user_id', 'university_id')
-            ->withPivot('scores');
+        return $this->belongsTo(User::class);
     }
 }

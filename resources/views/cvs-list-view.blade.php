@@ -3,12 +3,14 @@
 <head>
     <title>Retrieve CVs</title>
 </head>
+
 <body>
 <h2>Retrieve CVs</h2>
 <label for="fromDate">From:</label>
-<input type="text" id="fromDate" name="fromDate" class="datepicker" required><br><br>
+<input type="text" id="fromDate" name="fromDate" class="datepicker" required>
 <label for="toDate">To:</label>
-<input type="text" id="toDate" name="toDate" class="datepicker" required><br><br>
+<input type="text" id="toDate" name="toDate" class="datepicker"
+       required><br><br><br><br><br><br><br><br><br><br><br><br>
 <button id="retrieveBtn">Retrieve</button>
 <table id="cvTable">
     <thead>
@@ -17,25 +19,23 @@
         <th>Date of Birth</th>
         <th>University</th>
         <th>Skills</th>
-        <th>Score</th>
+        <th>Accreditation</th>
     </tr>
     </thead>
     <tbody id="cvData">
-    <!-- CV data will be populated here -->
     </tbody>
 </table>
 
-<!-- Include necessary JavaScript files for datepicker and Axios -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 <script>
-    $( function() {
-        $( ".datepicker" ).datepicker();
+    $(function () {
+        $(".datepicker").datepicker();
     });
 
-    $(document).ready(function() {
-        $('#retrieveBtn').click(function() {
+    $(document).ready(function () {
+        $('#retrieveBtn').click(function () {
             var fromDate = $('#fromDate').val();
             var toDate = $('#toDate').val();
             axios.get('/retrieve-cvs', {
@@ -44,23 +44,27 @@
                     toDate: toDate
                 }
             })
-                .then(function(response) {
+                .then(function (response) {
                     $('#cvData').empty();
-                    $.each(response.data, function(index, cv) {
-                        $('#cvData').append('<tr>' +
-                            '<td>' + cv.name + '</td>' +
-                            '<td>' + cv.dob + '</td>' +
-                            '<td>' + cv.university + '</td>' +
-                            '<td>' + cv.skills + '</td>' +
-                            '<td>' + cv.score + '</td>' +
-                            '</tr>');
-                    });
+                    $.each(response.data, function (index, cv) {
+                        let skillsNames = cv.skills.map(skill => skill.name).join(', ');
+                        $.each(response.data, function (index, cv) {
+                            $('#cvData').append('<tr>' +
+                                '<td>' + cv.user.name + '</td>' +
+                                '<td>' + cv.user.birth_date + '</td>' +
+                                '<td>' + cv.university.name + '</td>' +
+                                '<td>' + skillsNames + '</td>' +
+                                '<td>' + cv.university.accreditation + '</td>' +
+                                '</tr>');
+                        });
+                    })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                 })
-                .catch(function(error) {
-                    console.log(error);
-                });
         });
     });
+
 </script>
 </body>
 </html>

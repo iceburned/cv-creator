@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('cvs', function (Blueprint $table) {
             $table->id();
-            $table->string('score');
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
+            $table->string('accreditation');
             $table->foreignId('university_id')->nullable()->references('id')->on('universities');
             $table->timestamps();
         });
