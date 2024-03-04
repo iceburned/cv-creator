@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCvRequest;
+use App\Http\Requests\ListCvPerDateRequest;
 use App\Models\Cv;
 use App\Models\Skill;
 use App\Models\University;
@@ -24,32 +26,34 @@ class CvController extends Controller
         return view('cv-view', ['universities' => $universities, 'skills' => $skills]);
     }
 
-    public function store(Request $request)
+    public function store(CreateCvRequest $request)
     {
+        $validated = $request->validated();
+
         $user = User::firstOrCreate([
-            'name' => $request->name,
-            'middle_name' => $request->middle_name,
-            'last_name' => $request->last_name,
-            'birth_date' => $request->birth_date,
+            'name' => $validated['name'],
+            'middle_name' => $validated['middle_name'],
+            'last_name' => $validated['last_name'],
+            'birth_date' => $validated['birth_date'],
         ]);
 
-        $uni = University::find($request->university);
+        $uni = University::find($validated['university']);
 
         $cv = Cv::create([
             'user_id' => $user->id,
-            'accreditation' => $uni->accreditation,
             'university_id' => $uni->id,
         ]);
 
-        $cv->skills()->attach($request->skills);
+        $cv->skills()->attach($validated['skills']);
 
         return response()->redirectTo('/');
     }
 
-    public function getCvPerDate(Request $request)
+    public function getCvPerDate(ListCvPerDateRequest $request)
     {
-        $fromDate = $request->fromDate;
-        $toDate = $request->toDate;
+        $validated = $request->validated();
+        $fromDate = $validated['fromDate'];
+        $toDate = $validated['toDate'];
 
         return Cv::whereHas('user', function (Builder $query) use ($fromDate, $toDate) {
             return $query->where('birth_date', '>=', $fromDate)

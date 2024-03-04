@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUniversityRequest extends FormRequest
+class CreateCvRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,12 +14,12 @@ class CreateUniversityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name' => 'required',
+            'name' => 'required',
             'middle_name' => 'required',
             'last_name' => 'required',
-            'datepicker' => 'required',
-            'university_name' => 'required',
-            'accreditation' => 'required',
+            'birth_date' => 'required',
+            'skills' => 'array|required',
+            'university' => 'required',
         ];
     }
 }

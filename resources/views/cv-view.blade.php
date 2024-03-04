@@ -165,13 +165,13 @@
 <form id="cvForm" action="{{ route('store.cv') }}" method="POST">
     @csrf
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name"><br><br>
+    <input type="text" id="name" name="name" required><br><br>
     <label for="middle_name">Middle name:</label>
-    <input type="text" id="middle_name" name="middle_name"><br><br>
+    <input type="text" id="middle_name" name="middle_name" required><br><br>
     <label for="last_name">Last name:</label>
-    <input type="text" id="last_name" name="last_name"><br><br>
+    <input type="text" id="last_name" name="last_name" required><br><br>
     <label for="birth_date">Date of Birth:</label>
-    <input type="text" id="datepicker" name="birth_date"><br><br>
+    <input type="text" id="datepicker" name="birth_date" required><br><br>
     <label for="university">University:</label>
     <select id="university" name="university">
         <option value="">Select University</option>
@@ -210,5 +210,8 @@
 
     <button type="submit">Submit CV</button>
 </form>
+
+<br><br><br>
+<a href="{{ route('home') }}">To get cvs for given period click here!</a>
 </body>
 </html>

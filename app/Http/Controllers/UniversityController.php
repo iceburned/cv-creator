@@ -14,18 +14,20 @@ class UniversityController extends Controller
         return University::all();
     }
 
-    public function store(Request $request)
+    public function store(CreateUniversityRequest $request)
     {
+        $validated = $request->validated();
+
         $user = User::firstOrCreate([
-            'name' => $request->user_name,
-            'middle_name' => $request->middle_name,
-            'last_name' =>$request->last_name,
-            'birth_date' => $request->datepicker,
+            'name' => $validated['user_name'],
+            'middle_name' => $validated['middle_name'],
+            'last_name' =>$validated['last_name'],
+            'birth_date' => $validated['datepicker'],
         ]);
 
         $uni = University::firstOrCreate([
-            'name' => $request->university_name,
-            'accreditation' => $request->accreditation,
+            'name' => $validated['university_name'],
+            'accreditation' => $validated['accreditation'],
             'user_id' => $user->id,
         ]);
 

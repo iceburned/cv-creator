@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/cvs', [CvController::class, 'indexView'])->name('home');
 
 
 
-//Route::post('users', [UserController::class, 'store'])->name('create.user');
-Route::get('/', [CvController::class, 'index']);
+
+Route::get('/cvs', [CvController::class, 'indexView'])->name('create.cvs');
+Route::get('/', [CvController::class, 'index'])->name('home');
 Route::get('/retrieve-cvs', [CvController::class, 'getCvPerDate']);
 Route::post('/cvs', [CvController::class, 'store'])->name('store.cv');
 
