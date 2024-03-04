@@ -35,6 +35,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
 <script>
+
+
+
     $(document).ready(function () {
         $(".datepicker").datepicker();
 
@@ -74,6 +77,7 @@
         });
     });
 </script>
+
 
 <br><br><br>
 <a href="{{ route('create.cvs') }}">To create new CV click here!</a>

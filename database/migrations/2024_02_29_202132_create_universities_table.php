@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('universities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('user_id')->references('id')->on('users');
             $table->string('accreditation');
             $table->timestamps();
         });

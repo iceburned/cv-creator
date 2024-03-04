@@ -14,10 +14,6 @@ class CreateUniversityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name' => 'required',
-            'middle_name' => 'required',
-            'last_name' => 'required',
-            'datepicker' => 'required',
             'university_name' => 'required',
             'accreditation' => 'required',
         ];
