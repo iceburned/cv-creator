@@ -28,6 +28,8 @@
     <thead>
     <tr>
         <th>Name</th>
+        <th>Middle</th>
+        <th>Last</th>
         <th>Date of Birth</th>
         <th>University</th>
         <th>Skills</th>
@@ -69,6 +71,8 @@
                         let skillsNames = cv.skills.map(skill => skill.name).join(', ');
                         $('#cvData').append('<tr>' +
                             '<td>' + cv.user.name + '</td>' +
+                            '<td>' + cv.user.middle_name + '</td>' +
+                            '<td>' + cv.user.last_name + '</td>' +
                             '<td>' + cv.user.birth_date + '</td>' +
                             '<td>' + cv.university.name + '</td>' +
                             '<td>' + skillsNames + '</td>' +

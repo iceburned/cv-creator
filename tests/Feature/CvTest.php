@@ -100,7 +100,10 @@ class CvTest extends TestCase
         Cv::factory()->create(['user_id' => $user1->id, 'university_id' => $university1->id]);
         Cv::factory()->create(['user_id' => $user2->id, 'university_id' => $university2->id]);
 
-        $response = $this->postJson(route('get.cv.per.date'), compact('fromDate', 'toDate'));
+        $response = $this->get(route('get.cv.per.date', [
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
+        ]));
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonCount(2);
