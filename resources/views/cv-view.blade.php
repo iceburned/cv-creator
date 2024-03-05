@@ -28,12 +28,6 @@
                     $.each(skills, function (index, skill) {
                         skillSelect.append('<option value="' + skill.id + '">' + skill.name + '</option>');
                     });
-                    // skillSelect.multiselect({
-                    //     nonSelectedText: 'Select Skills',
-                    //     enableFiltering: true,
-                    //     enableCaseInsensitiveFiltering: true,
-                    //     buttonWidth: '100%'
-                    // });
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
